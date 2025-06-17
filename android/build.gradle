@@ -1,9 +1,11 @@
 buildscript {
     ext.kotlin_version = '1.9.0'
-    repositories {
-        google()
-        mavenCentral()
-    }
+
+    // هذه الكتلة ستسبب فشل لأنك تستخدم PREFER_SETTINGS
+    // repositories {
+    //     google()
+    //     mavenCentral()
+    // }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.2'
@@ -12,13 +14,14 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
-    }
-}
+// تعليق هذا الجزء بالكامل لأنه غير مسموح به مع PREFER_SETTINGS
+// allprojects {
+//     repositories {
+//         google()
+//         mavenCentral()
+//         maven { url 'https://jitpack.io' }
+//     }
+// }
 
 rootProject.buildDir = '../build'
 subprojects {
