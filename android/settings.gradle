@@ -3,7 +3,12 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven { url 'https://jitpack.io' } // ضف هذا لو كنت تحتاج jitpack
+        maven { url 'https://jitpack.io' }
+    }
+    plugins {
+        id "com.android.application" version "7.4.2" apply false
+        id "org.jetbrains.kotlin.android" version "1.9.0" apply false
+        id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
     }
 }
 
@@ -13,6 +18,6 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
-        maven { url "https://storage.googleapis.com/download.flutter.io" } // خاص بـ Flutter
+        maven { url "https://storage.googleapis.com/download.flutter.io" }
     }
 }
