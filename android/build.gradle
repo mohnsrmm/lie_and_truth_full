@@ -1,11 +1,19 @@
+// android/build.gradle (Root-level)
+
+// نُعيد توجيه مجلدات build لكل وحدة إلى مجلد build واحد أعلى المشروع
 rootProject.buildDir = '../build'
+
 subprojects {
+    // لكل وحدة (app، :flutter، إلخ) اجعل buildDir داخل مجلد build المشترك
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
+// تأكّد من أن gradle يُقيّم إعدادات :app قبل بقية الوحدات (مفيد لبعض الـ plugins)
 subprojects {
     project.evaluationDependsOn(':app')
 }
 
+// مهمة clean الموحّدة
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
