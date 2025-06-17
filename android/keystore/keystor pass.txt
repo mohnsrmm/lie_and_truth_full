@@ -1,0 +1,2 @@
+jks file and signed app bundle
+pass : 555555

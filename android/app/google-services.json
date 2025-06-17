@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "674669424406",
+    "project_id": "lie-and-truth-detector-prank",
+    "storage_bucket": "lie-and-truth-detector-prank.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674669424406:android:ee71ad994ef7e7f9a86a37",
+        "android_client_info": {
+          "package_name": "com.nasr.Lieandtruth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674669424406-7ta7ec4ac8pmvnrjkj8l4b47i1s4kjmq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqrs1BBYmY6ujKflJAHG6nODc-xqGA6rw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674669424406-7ta7ec4ac8pmvnrjkj8l4b47i1s4kjmq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674669424406:android:1e9031104a916d95a86a37",
+        "android_client_info": {
+          "package_name": "com.nasr.Lieandtruth2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674669424406-7ta7ec4ac8pmvnrjkj8l4b47i1s4kjmq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqrs1BBYmY6ujKflJAHG6nODc-xqGA6rw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674669424406-7ta7ec4ac8pmvnrjkj8l4b47i1s4kjmq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
