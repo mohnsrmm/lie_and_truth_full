@@ -1,0 +1,14 @@
+# Signing secrets (DO NOT COMMIT)
+android/key.properties
+android/keystore/
+*.jks
+*.keystore
+*.txt
+
+# Local Android/Flutter files
+android/local.properties
+**/.DS_Store
+.idea/
+.vscode/
+build/
+.dart_tool/
