@@ -1,29 +1,20 @@
 pluginManagement {
+    def flutterSdkPath = {
+        def properties = new Properties()
+        file("local.properties").withInputStream { properties.load(it) }
+        def flutterSdkPath = properties.getProperty("flutter.sdk")
+        assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
+        return flutterSdkPath
+    }()
+
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
     }
 }
-
-// --- locate Flutter SDK ---
-def flutterSdkPath = System.getenv("FLUTTER_ROOT")
-
-if (flutterSdkPath == null || flutterSdkPath.trim().isEmpty()) {
-    def localPropertiesFile = new File(rootDir, "local.properties")
-    if (localPropertiesFile.exists()) {
-        def properties = new Properties()
-        localPropertiesFile.withInputStream { properties.load(it) }
-        flutterSdkPath = properties.getProperty("flutter.sdk")
-    }
-}
-
-if (flutterSdkPath == null || flutterSdkPath.trim().isEmpty()) {
-    throw new GradleException("Flutter SDK not found. Set FLUTTER_ROOT or define flutter.sdk in android/local.properties")
-}
-
-// Flutter Gradle tooling (NOT from Maven)
-includeBuild("${flutterSdkPath}/packages/flutter_tools/gradle")
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
@@ -36,4 +27,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "android"
-include(":app")
+include ":app"
