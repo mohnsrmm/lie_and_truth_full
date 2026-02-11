@@ -1,19 +1,32 @@
-// android/build.gradle (Root-level)
-
-// نُعيد توجيه مجلدات build لكل وحدة إلى مجلد build واحد أعلى المشروع
-rootProject.buildDir = '../build'
-
-subprojects {
-    // لكل وحدة (app، :flutter، إلخ) اجعل buildDir داخل مجلد build المشترك
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
+buildscript {
+    ext.kotlin_version = '1.9.0'
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.4.2'
+    }
 }
 
-// تأكّد من أن gradle يُقيّم إعدادات :app قبل بقية الوحدات (مفيد لبعض الـ plugins)
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
 subprojects {
     project.evaluationDependsOn(':app')
 }
 
-// مهمة clean الموحّدة
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
