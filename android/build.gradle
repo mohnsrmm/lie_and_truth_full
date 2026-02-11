@@ -1,6 +1,5 @@
 buildscript {
     ext.kotlin_version = '1.9.0'
-
     repositories {
         google()
         mavenCentral()
@@ -13,16 +12,7 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url "https://jitpack.io" }
-    }
-}
-
 rootProject.buildDir = '../build'
-
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
