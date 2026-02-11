@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 
+// --- read local.properties (Flutter + version) ---
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -10,14 +11,25 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+def flutterRoot = localProperties.getProperty('flutter.sdk') ?: System.getenv("FLUTTER_ROOT")
+if (flutterRoot == null || flutterRoot.trim().isEmpty()) {
+    throw new GradleException("Flutter SDK not found. Set FLUTTER_ROOT or define flutter.sdk in android/local.properties")
+}
+
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode') ?: '1'
 def flutterVersionName = localProperties.getProperty('flutter.versionName') ?: '1.0'
 
+// --- keystore (supports Codemagic env vars OR key.properties) ---
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
+
+def cmKeystorePath = System.getenv("CM_KEYSTORE_PATH")
+def cmKeystorePassword = System.getenv("CM_KEYSTORE_PASSWORD")
+def cmKeyAlias = System.getenv("CM_KEY_ALIAS")
+def cmKeyPassword = System.getenv("CM_KEY_PASSWORD")
 
 android {
     namespace "com.nasr.Lieandtruth2"
@@ -33,16 +45,25 @@ android {
 
     signingConfigs {
         release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-            storePassword keystoreProperties['storePassword']
+            def storePath = cmKeystorePath ?: keystoreProperties['storeFile']
+            storeFile storePath ? file(storePath) : null
+
+            storePassword cmKeystorePassword ?: keystoreProperties['storePassword']
+            keyAlias cmKeyAlias ?: keystoreProperties['keyAlias']
+            keyPassword cmKeyPassword ?: keystoreProperties['keyPassword']
         }
     }
 
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            // لو عايز تصغير حجم:
+            // minifyEnabled true
+            // shrinkResources true
+            // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // default debug
         }
     }
 
@@ -50,16 +71,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
         jvmTarget = '1.8'
     }
 }
 
+// Flutter Gradle script (old stable way)
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.android.exoplayer:exoplayer:2.19.1'
 }
