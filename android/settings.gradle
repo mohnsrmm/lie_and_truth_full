@@ -1,10 +1,28 @@
 pluginManagement {
+    // نجيب مسار Flutter SDK من FLUTTER_ROOT (الأفضل في Codemagic) أو من local.properties (لو موجود)
+    def flutterSdkPath = System.getenv("FLUTTER_ROOT")
+    if (flutterSdkPath == null || flutterSdkPath.trim().isEmpty()) {
+        def localPropertiesFile = new File(rootDir, "local.properties")
+        if (localPropertiesFile.exists()) {
+            def properties = new Properties()
+            localPropertiesFile.withInputStream { properties.load(it) }
+            flutterSdkPath = properties.getProperty("flutter.sdk")
+        }
+    }
+    if (flutterSdkPath == null || flutterSdkPath.trim().isEmpty()) {
+        throw new GradleException("Flutter SDK not found. Set FLUTTER_ROOT in CI or define flutter.sdk in android/local.properties")
+    }
+
+    // ده اللي كان ناقص عندك وبيحل مشكلة dev.flutter.flutter-gradle-plugin
+    includeBuild("${flutterSdkPath}/packages/flutter_tools/gradle")
+
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven { url 'https://jitpack.io' }
+        maven { url "https://jitpack.io" }
     }
+
     plugins {
         id "com.android.application" version "7.4.2" apply false
         id "com.android.library" version "7.4.2" apply false
@@ -19,8 +37,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
-        maven { url 'https://storage.googleapis.com/download.flutter.io' }
+        maven { url "https://jitpack.io" }
+        maven { url "https://storage.googleapis.com/download.flutter.io" }
     }
 }
 
