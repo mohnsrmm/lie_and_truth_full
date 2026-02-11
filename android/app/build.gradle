@@ -23,6 +23,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
+    namespace "com.nasr.Lieandtruth2"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -59,6 +60,12 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            // لو عايز تقلل مشاكل proguard مؤقتًا:
+            // minifyEnabled false
+            // shrinkResources false
+        }
+        debug {
+            // debug default
         }
     }
 }
